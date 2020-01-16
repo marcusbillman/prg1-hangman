@@ -7,9 +7,12 @@ import java.util.Scanner;
  */
 public class hangman {
     private static String word = "apple";
+    private static String[] progress;
 
     public static void main(String[] args) {
         String guess;
+
+        progress = new String[word.length()];
 
         guess = getGuess();
     }
@@ -23,4 +26,6 @@ public class hangman {
         } while (g.equals(""));
         return g;
     }
+
+    private static
 }
