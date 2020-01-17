@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -8,13 +9,20 @@ import java.util.Scanner;
 public class hangman {
     private static String word = "apple";
     private static String[] progress;
+    private static int gameStatus = 0;
 
     public static void main(String[] args) {
-        String guess;
-
+        // Initialise progress array
         progress = new String[word.length()];
+        Arrays.fill(progress, "_");
 
-        guess = getGuess();
+        String guess = getGuess();
+        validateGuess(guess);
+
+        // Print progress
+        for (String s : progress) {
+            System.out.print(s + " ");
+        }
     }
 
     private static String getGuess() {
@@ -27,5 +35,21 @@ public class hangman {
         return g;
     }
 
-    private static
+    private static boolean validateGuess(String g) {
+        boolean match = false;
+        if (word.equals(g)) {
+            gameStatus = 1;
+            for (int i = 0; i < word.length(); i++) {
+                progress[i] = String.valueOf(word.charAt(i));
+            }
+            return true;
+        }
+        for (int i = 0; i < word.length(); i++) {
+            if (String.valueOf(word.charAt(i)).equals(g)) {
+                progress[i] = String.valueOf(word.charAt(i));
+                match = true;
+            }
+        }
+        return match;
+    }
 }
