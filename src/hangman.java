@@ -16,13 +16,29 @@ public class hangman {
         progress = new String[word.length()];
         Arrays.fill(progress, "_");
 
-        String guess = getGuess();
-        validateGuess(guess);
+        // Main game loop
+        while (gameStatus == 0) {
+            // Print progress
+            System.out.println();
+            for (String s : progress) {
+                System.out.print(s + " ");
+            }
+            System.out.println();
 
-        // Print progress
-        for (String s : progress) {
-            System.out.print(s + " ");
+            String guess = getGuess();
+            validateGuess(guess);
+            gameStatus = checkWin();
         }
+
+    }
+
+    private static int checkWin() {
+        for (String s : progress) {
+            if (s.equals("_")) {
+                return 0;
+            }
+        }
+        return 1;
     }
 
     private static String getGuess() {
@@ -38,7 +54,6 @@ public class hangman {
     private static boolean validateGuess(String g) {
         boolean match = false;
         if (word.equals(g)) {
-            gameStatus = 1;
             for (int i = 0; i < word.length(); i++) {
                 progress[i] = String.valueOf(word.charAt(i));
             }
