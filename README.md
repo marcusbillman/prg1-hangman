@@ -5,3 +5,10 @@ Ett enkelt hängagubbespel med en och flerspelarlägen.
 - Friviligt true flerspelarläge. Datorn genererar ett ord från en ordlista och spelarna turas om att gissa bokstäver eller ord.
 
 [Flowchart](https://drive.google.com/file/d/1m-PAwS5MnOosZcp__UptCg9HZrMapVrR/view?usp=sharing)
+
+# Ändringslogg
+
+## 16 Jan
+- "Färdigställd" flödesdiagram
+- Lade till getGuess
+- Imorgon lägger vi till showStatus/validateGuess
