@@ -12,3 +12,9 @@ Ett enkelt hängagubbespel med en och flerspelarlägen.
 - "Färdigställd" flödesdiagram
 - Lade till getGuess
 - Imorgon lägger vi till showStatus/validateGuess
+
+## 17 Jan
+- Lade till validateGuess
+- Lade till checkWin
+- Lade till nounlist.txt
+- Lade till fin asciikonst
