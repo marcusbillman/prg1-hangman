@@ -16,6 +16,8 @@ public class hangman {
     private static int gameStatus = 0;
 
     public static void main(String[] args) {
+        int gameMode = getGameMode();
+
         word = generateWord();
 
         // Initialise progress array
@@ -62,6 +64,32 @@ public class hangman {
             }
         }
         return 1;
+    }
+
+    private static int getGameMode() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        int mode = 0;
+        System.out.println("SELECT GAME MODE\n" +
+                "1 : Singleplayer\n" +
+                "2 : Multiplayer\n" +
+                "3 : True multiplayer");
+        do {
+            System.out.print("Mode : ");
+            input = scanner.nextLine();
+            switch (input) {
+                case "1":
+                    mode = 1;
+                    break;
+                case "2":
+                    mode = 2;
+                    break;
+                case "3":
+                    mode = 3;
+                    break;
+            }
+        } while (mode != 1 && mode != 2 && mode != 3);
+        return mode;
     }
 
     private static String getGuess() {
