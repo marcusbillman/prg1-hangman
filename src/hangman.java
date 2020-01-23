@@ -17,12 +17,13 @@ public class hangman {
 
     public static void main(String[] args) {
         int gameMode = getGameMode();
-
-        word = generateWord();
+        word = getWord(gameMode);
 
         // Initialise progress array
         progress = new String[word.length()];
         Arrays.fill(progress, "_");
+
+        clearTerminal();
 
         // Main game loop
         while (gameStatus == 0) {
@@ -40,21 +41,32 @@ public class hangman {
 
     }
 
-    private static String generateWord() {
-        // Read nounlist file into memory
-        Scanner file = null;
-        try {
-            file = new Scanner(new File("./resources/nounlist.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ArrayList<String> wordlist = new ArrayList<>();
-        while(file.hasNext())
-            wordlist.add(file.nextLine());
+    private static String getWord(int mode) {
+        String word;
+        if (mode == 1 || mode == 3) {
+            // Read nounlist file into memory
+            Scanner file = null;
+            try {
+                file = new Scanner(new File("./resources/nounlist.txt"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<String> wordlist = new ArrayList<>();
+            while(file.hasNext())
+                wordlist.add(file.nextLine());
 
-        // Return random word
-        Random random = new Random();
-        return wordlist.get(random.nextInt(wordlist.size()));
+            // Return random word
+            Random random = new Random();
+            word = wordlist.get(random.nextInt(wordlist.size()));
+        }
+        else {
+            Scanner scanner = new Scanner(System.in);
+            do {
+                System.out.print("Choose word : ");
+                word = scanner.nextLine();
+            } while (word.equals(""));
+        }
+        return word;
     }
 
     private static int checkWin() {
@@ -117,5 +129,11 @@ public class hangman {
             }
         }
         return match;
+    }
+
+    private static void clearTerminal() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
     }
 }
