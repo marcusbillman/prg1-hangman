@@ -1,4 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -7,11 +11,13 @@ import java.util.Scanner;
  * Marcus Billman
  */
 public class hangman {
-    private static String word = "apple";
+    private static String word;
     private static String[] progress;
     private static int gameStatus = 0;
 
     public static void main(String[] args) {
+        word = generateWord();
+
         // Initialise progress array
         progress = new String[word.length()];
         Arrays.fill(progress, "_");
@@ -30,6 +36,23 @@ public class hangman {
             gameStatus = checkWin();
         }
 
+    }
+
+    private static String generateWord() {
+        // Read nounlist file into memory
+        Scanner file = null;
+        try {
+            file = new Scanner(new File("./resources/nounlist.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ArrayList<String> wordlist = new ArrayList<>();
+        while(file.hasNext())
+            wordlist.add(file.nextLine());
+
+        // Return random word
+        Random random = new Random();
+        return wordlist.get(random.nextInt(wordlist.size()));
     }
 
     private static int checkWin() {
