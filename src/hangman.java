@@ -14,6 +14,7 @@ public class hangman {
     private static String word;
     private static String[] progress;
     private static int gameStatus = 0;
+    private static int incorrectGuesses = 0;
 
     public static void main(String[] args) {
         int gameMode = getGameMode();
@@ -28,6 +29,8 @@ public class hangman {
         // Main game loop
         while (gameStatus == 0) {
             // Print progress
+            clearTerminal();
+            showHangmanArt(incorrectGuesses);
             System.out.println();
             for (String s : progress) {
                 System.out.print(s + " ");
@@ -35,10 +38,24 @@ public class hangman {
             System.out.println();
 
             String guess = getGuess();
-            validateGuess(guess);
+            if (!validateGuess(guess))
+                incorrectGuesses++;
             gameStatus = checkWin();
+            if (incorrectGuesses >= 10)
+                gameStatus = 2;
         }
 
+    }
+
+    private static void showHangmanArt(int g) {
+        Scanner file = null;
+        try {
+            file = new Scanner(new File("./resources/frame" + g + ".txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while(file.hasNext())
+            System.out.println(file.nextLine());
     }
 
     private static String getWord(int mode) {
