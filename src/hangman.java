@@ -18,6 +18,9 @@ public class hangman {
     private static ArrayList<String> previousGuesses = new ArrayList<>();
 
     public static void main(String[] args) {
+        printArt(102);
+        System.out.println();
+
         int gameMode = getGameMode();
         word = getWord(gameMode);
 
@@ -70,8 +73,10 @@ public class hangman {
                 file = new Scanner(new File("./resources/frame" + n + ".txt"));
             } else if (n == 100){
                 file = new Scanner(new File("./resources/winscreen.txt"));
-            } else {
+            } else if (n == 101){
                 file = new Scanner(new File("./resources/losescreen.txt"));
+            } else if (n == 102){
+                file = new Scanner(new File("./resources/startscreen.txt"));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
