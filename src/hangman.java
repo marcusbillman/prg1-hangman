@@ -30,7 +30,7 @@ public class hangman {
         while (gameStatus == 0) {
             // Print progress
             clearTerminal();
-            showHangmanArt(incorrectGuesses);
+            printArt(incorrectGuesses);
             System.out.println();
             for (String s : progress) {
                 System.out.print(s + " ");
@@ -45,12 +45,26 @@ public class hangman {
                 gameStatus = 2;
         }
 
+        // Show end screen
+        if (gameStatus == 1) {
+            printArt(100);
+        } else {
+            clearTerminal();
+            printArt(incorrectGuesses);
+            printArt(101);
+        }
     }
 
-    private static void showHangmanArt(int g) {
+    private static void printArt(int n) {
         Scanner file = null;
         try {
-            file = new Scanner(new File("./resources/frame" + g + ".txt"));
+            if (n <= 10) {
+                file = new Scanner(new File("./resources/frame" + n + ".txt"));
+            } else if (n == 100){
+                file = new Scanner(new File("./resources/winscreen.txt"));
+            } else {
+                file = new Scanner(new File("./resources/losescreen.txt"));
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
