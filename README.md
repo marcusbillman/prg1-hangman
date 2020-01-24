@@ -18,3 +18,9 @@ Ett enkelt hängagubbespel med en och flerspelarlägen.
 - Lade till checkWin
 - Lade till nounlist.txt
 - Lade till fin asciikonst
+
+## 23 Jan 
+- Lade till fin slutskärms asciikonst
+- Lade till getWord
+- Lade till getGameMode
+- Imorgon gör vi showStatus och endScreen
