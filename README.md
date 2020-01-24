@@ -24,3 +24,9 @@ Ett enkelt hängagubbespel med en och flerspelarlägen.
 - Lade till getWord
 - Lade till getGameMode
 - Imorgon gör vi showStatus och endScreen
+
+## 24 Jan 
+- Lade till startskärmsgrafik och startskärm
+- Lade till system för att komma ihåg tidigare gissningar
+- Lade till endScreen
+- Gjorde så att asciikonsten visas
