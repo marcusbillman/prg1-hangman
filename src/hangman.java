@@ -15,6 +15,7 @@ public class hangman {
     private static String[] progress;
     private static int gameStatus = 0;
     private static int incorrectGuesses = 0;
+    private static ArrayList<String> previousGuesses = new ArrayList<>();
 
     public static void main(String[] args) {
         int gameMode = getGameMode();
@@ -23,8 +24,6 @@ public class hangman {
         // Initialise progress array
         progress = new String[word.length()];
         Arrays.fill(progress, "_");
-
-        clearTerminal();
 
         // Main game loop
         while (gameStatus == 0) {
@@ -36,13 +35,22 @@ public class hangman {
                 System.out.print(s + " ");
             }
             System.out.println();
+            System.out.println();
+            for (String s : previousGuesses) {
+                System.out.print(s + " ");
+            }
+            System.out.println();
+            System.out.println();
 
             String guess = getGuess();
-            if (!validateGuess(guess))
+            if (!validateGuess(guess)) {
                 incorrectGuesses++;
+                previousGuesses.add(guess);
+            }
             gameStatus = checkWin();
-            if (incorrectGuesses >= 10)
+            if (incorrectGuesses >= 10) {
                 gameStatus = 2;
+            }
         }
 
         // Show end screen
@@ -141,7 +149,7 @@ public class hangman {
         do {
             System.out.print("Guess : ");
             g = scanner.nextLine();
-        } while (g.equals(""));
+        } while (g.equals("") || previousGuesses.contains(g) || !(g.length() == 1 || g.length() == word.length()));
         return g;
     }
 
