@@ -30,20 +30,9 @@ public class hangman {
 
         // Main game loop
         while (gameStatus == 0) {
-            // Print progress
             clearTerminal();
             printArt(incorrectGuesses);
-            System.out.println();
-            for (String s : progress) {
-                System.out.print(s + " ");
-            }
-            System.out.println();
-            System.out.println();
-            for (String s : previousGuesses) {
-                System.out.print(s + " ");
-            }
-            System.out.println();
-            System.out.println();
+            printStatus();
 
             String guess = getGuess();
             if (!validateGuess(guess)) {
@@ -53,17 +42,40 @@ public class hangman {
             gameStatus = checkWin();
             if (incorrectGuesses >= 10) {
                 gameStatus = 2;
+                // Copy word into progress array
+                for (int i = 0; i < progress.length; i++) {
+                    progress[i] = String.valueOf(word.charAt(i));
+                }
             }
         }
 
         // Show end screen
         if (gameStatus == 1) {
+            clearTerminal();
+            printArt(incorrectGuesses);
+            printStatus();
             printArt(100);
         } else {
             clearTerminal();
             printArt(incorrectGuesses);
+            printStatus();
             printArt(101);
         }
+    }
+
+    private static void printStatus() {
+        // Print status and progress
+        System.out.println();
+        for (String s : progress) {
+            System.out.print(s + " ");
+        }
+        System.out.println();
+        System.out.println();
+        for (String s : previousGuesses) {
+            System.out.print(s + " ");
+        }
+        System.out.println();
+        System.out.println();
     }
 
     private static void printArt(int n) {
@@ -83,8 +95,8 @@ public class hangman {
         }
         for (int i = 0; file.hasNext(); i++) {
             System.out.print(file.nextLine());
-            if ((n <= 10 || n == 100) && i == 4) {
-                System.out.print((10 - incorrectGuesses) + " guesses remaining");
+            if (n <= 10 && i == 4) {
+                System.out.print((10 - incorrectGuesses) + ((incorrectGuesses == 9)? " guess ":" guesses ") + "remaining");
             }
             System.out.println();
         }
