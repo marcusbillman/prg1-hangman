@@ -81,8 +81,13 @@ public class hangman {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        while(file.hasNext())
-            System.out.println(file.nextLine());
+        for (int i = 0; file.hasNext(); i++) {
+            System.out.print(file.nextLine());
+            if ((n <= 10 || n == 100) && i == 4) {
+                System.out.print((10 - incorrectGuesses) + " guesses remaining");
+            }
+            System.out.println();
+        }
     }
 
     private static String getWord(int mode) {
@@ -153,7 +158,7 @@ public class hangman {
         String g;
         do {
             System.out.print("Guess : ");
-            g = scanner.nextLine();
+            g = scanner.nextLine().toLowerCase();
         } while (g.equals("") || previousGuesses.contains(g) || !(g.length() == 1 || g.length() == word.length()));
         return g;
     }
