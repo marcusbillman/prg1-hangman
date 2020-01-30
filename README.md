@@ -30,3 +30,9 @@ Ett enkelt hängagubbespel med en och flerspelarlägen.
 - Lade till system för att komma ihåg tidigare gissningar
 - Lade till endScreen
 - Gjorde så att asciikonsten visas
+
+## 30 Jan
+- Lade till så att stora bokstäver räknas som små bokstäver
+- Lade till system som kollar om gissning har icke-bokstäver
+- Skrev om printArt och printStatus
+- Ordnade om metoderna och lade till kommentarer
