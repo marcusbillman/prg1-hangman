@@ -63,6 +63,103 @@ public class hangman {
         }
     }
 
+    private static String getWord(int mode) {
+        String word;
+        if (mode == 1 || mode == 3) {
+            // Read nounlist file into memory
+            Scanner file = null;
+            try {
+                file = new Scanner(new File("./resources/nounlist.txt"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            ArrayList<String> wordlist = new ArrayList<>();
+            while(file.hasNext())
+                wordlist.add(file.nextLine());
+
+            // Return random word
+            Random random = new Random();
+            word = wordlist.get(random.nextInt(wordlist.size()));
+        }
+        else {
+            Scanner scanner = new Scanner(System.in);
+            do {
+                System.out.print("Choose word : ");
+                word = scanner.nextLine();
+            } while (word.equals(""));
+        }
+        return word;
+    }
+
+    private static int getGameMode() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        int mode = 0;
+        System.out.println("SELECT GAME MODE\n" +
+                "1 : Singleplayer\n" +
+                "2 : Multiplayer\n" +
+                "3 : True multiplayer");
+        do {
+            System.out.print("Mode : ");
+            input = scanner.nextLine();
+            switch (input) {
+                case "1":
+                    mode = 1;
+                    break;
+                case "2":
+                    mode = 2;
+                    break;
+                case "3":
+                    mode = 3;
+                    break;
+            }
+        } while (mode != 1 && mode != 2 && mode != 3);
+        return mode;
+    }
+
+    private static String getGuess() {
+        Scanner scanner = new Scanner(System.in);
+        String g;
+        do {
+            System.out.print("Guess : ");
+            g = scanner.nextLine().toLowerCase();
+            // Check if guess is invalid
+        } while (g.equals("") || !g.matches("[a-zA-Z]+") || previousGuesses.contains(g) || !(g.length() == 1 || g.length() == word.length()));
+        return g;
+    }
+
+    private static boolean validateGuess(String g) {
+        boolean match = false;
+        if (word.equals(g)) {
+            for (int i = 0; i < word.length(); i++) {
+                progress[i] = String.valueOf(word.charAt(i));
+            }
+            return true;
+        }
+        for (int i = 0; i < word.length(); i++) {
+            if (String.valueOf(word.charAt(i)).equals(g)) {
+                progress[i] = String.valueOf(word.charAt(i));
+                match = true;
+            }
+        }
+        return match;
+    }
+
+    private static int checkWin() {
+        for (String s : progress) {
+            if (s.equals("_")) {
+                return 0;
+            }
+        }
+        return 1;
+    }
+
+    private static void clearTerminal() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+    }
+
     private static void printStatus() {
         // Print status and progress
         System.out.println();
@@ -98,102 +195,6 @@ public class hangman {
             if (n <= 10 && i == 4) {
                 System.out.print((10 - incorrectGuesses) + ((incorrectGuesses == 9)? " guess ":" guesses ") + "remaining");
             }
-            System.out.println();
-        }
-    }
-
-    private static String getWord(int mode) {
-        String word;
-        if (mode == 1 || mode == 3) {
-            // Read nounlist file into memory
-            Scanner file = null;
-            try {
-                file = new Scanner(new File("./resources/nounlist.txt"));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            ArrayList<String> wordlist = new ArrayList<>();
-            while(file.hasNext())
-                wordlist.add(file.nextLine());
-
-            // Return random word
-            Random random = new Random();
-            word = wordlist.get(random.nextInt(wordlist.size()));
-        }
-        else {
-            Scanner scanner = new Scanner(System.in);
-            do {
-                System.out.print("Choose word : ");
-                word = scanner.nextLine();
-            } while (word.equals(""));
-        }
-        return word;
-    }
-
-    private static int checkWin() {
-        for (String s : progress) {
-            if (s.equals("_")) {
-                return 0;
-            }
-        }
-        return 1;
-    }
-
-    private static int getGameMode() {
-        Scanner scanner = new Scanner(System.in);
-        String input;
-        int mode = 0;
-        System.out.println("SELECT GAME MODE\n" +
-                "1 : Singleplayer\n" +
-                "2 : Multiplayer\n" +
-                "3 : True multiplayer");
-        do {
-            System.out.print("Mode : ");
-            input = scanner.nextLine();
-            switch (input) {
-                case "1":
-                    mode = 1;
-                    break;
-                case "2":
-                    mode = 2;
-                    break;
-                case "3":
-                    mode = 3;
-                    break;
-            }
-        } while (mode != 1 && mode != 2 && mode != 3);
-        return mode;
-    }
-
-    private static String getGuess() {
-        Scanner scanner = new Scanner(System.in);
-        String g;
-        do {
-            System.out.print("Guess : ");
-            g = scanner.nextLine().toLowerCase();
-        } while (g.equals("") || !g.matches("[a-zA-Z]+") || previousGuesses.contains(g) || !(g.length() == 1 || g.length() == word.length()));
-        return g;
-    }
-
-    private static boolean validateGuess(String g) {
-        boolean match = false;
-        if (word.equals(g)) {
-            for (int i = 0; i < word.length(); i++) {
-                progress[i] = String.valueOf(word.charAt(i));
-            }
-            return true;
-        }
-        for (int i = 0; i < word.length(); i++) {
-            if (String.valueOf(word.charAt(i)).equals(g)) {
-                progress[i] = String.valueOf(word.charAt(i));
-                match = true;
-            }
-        }
-        return match;
-    }
-
-    private static void clearTerminal() {
-        for (int i = 0; i < 100; i++) {
             System.out.println();
         }
     }
