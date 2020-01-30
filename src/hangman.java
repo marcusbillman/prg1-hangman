@@ -159,7 +159,7 @@ public class hangman {
         do {
             System.out.print("Guess : ");
             g = scanner.nextLine().toLowerCase();
-        } while (g.equals("") || previousGuesses.contains(g) || !(g.length() == 1 || g.length() == word.length()));
+        } while (g.equals("") || !g.matches("[a-zA-Z]+") || previousGuesses.contains(g) || !(g.length() == 1 || g.length() == word.length()));
         return g;
     }
 
